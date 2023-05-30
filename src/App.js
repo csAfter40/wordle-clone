@@ -6,26 +6,41 @@ import Keyboard from "./components/Keyboard";
 
 function App() {
   // var words = require('an-array-of-english-words')
-
+  
   const fiveLetterWords = words.filter((word) => word.length === 5)
   const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords));
   const [answers, setAnswers] = React.useState([
-    {text: "QWERT", registered: false},
-    {text: "", registered: false},
-    {text: "", registered: false},
-    {text: "", registered: false},
-    {text: "", registered: false},
-    {text: "", registered: false},
+    {wordArray: ["", "", "", "", ""], isRegistered: false},
+    {wordArray: ["", "", "", "", ""], isRegistered: false},
+    {wordArray: ["", "", "", "", ""], isRegistered: false},
+    {wordArray: ["", "", "", "", ""], isRegistered: false},
+    {wordArray: ["", "", "", "", ""], isRegistered: false},
+    {wordArray: ["", "", "", "", ""], isRegistered: false},
   ])
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
+  const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
+  function registerWord(){
+    if(currentLetterIndex===5){
+      setAnswers((prevAnswers)=>{
+        let newAnswers = [...prevAnswers]
+        let prevAnswer = prevAnswers[currentWordIndex]
+        newAnswers[currentWordIndex] = {...prevAnswer, isRegistered:true}
+        return newAnswers
+      });
+      currentWordIndex < 4 && setCurrentWordIndex((prevIndex) => prevIndex + 1)
+      setCurrentLetterIndex(0);
+    }
+  }
 
-  function registerWord(index, text){
-    setAnswers((prevAnswers)=>{
-      const newAnswers = prevAnswers.map((answer, i) => {
-        return (i === index ? {text: text, registered: true}: answer)
-      })
-    });
-    index < 5 && setCurrentIndex((prevIndex) => prevIndex + 1)
+  function addLetter(letter) {
+    currentLetterIndex<5 && setAnswers((prevAnswers) => {
+      let newAnswers = [...prevAnswers];
+      let newWordArray = newAnswers[currentWordIndex].wordArray;
+      newWordArray[currentLetterIndex] = newWordArray[currentLetterIndex] ? newWordArray[currentLetterIndex] : letter;
+      newAnswers[currentWordIndex] = {wordArray: newWordArray, isRegistered:false};
+      return newAnswers
+    })
+    setCurrentLetterIndex((prevIndex) => prevIndex<5 ? prevIndex+1 : prevIndex)
   }
 
   return (
@@ -36,14 +51,15 @@ function App() {
             <Word 
               key={i}
               answer={answer}
-              registerWord={registerWord}
-              index={i}
-              isCurrentIndex={currentIndex === i}
+              isCurrentIndex={currentWordIndex === i}
             />
           )
         })}
       </div>
-      <Keyboard />
+      <Keyboard 
+        registerWord={registerWord}
+        addLetter={addLetter}
+      />
     </div>
   );
 }

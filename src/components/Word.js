@@ -1,14 +1,11 @@
 import React  from "react";
 
-export default function Word({answer, registerWord, index, isCurrentIndex}) {
-    const wordArray = answer.text ? [...answer.text]: ["", "", "", "", ""];
-    const [word, setWord] = React.useState(wordArray);
-    console.log(word)
+export default function Word({answer, isCurrentIndex}) {
     return (
         <div className="word-container">
-            {word.map((letter)=>{
+            {answer.wordArray.map((letter, i)=>{
                 return (
-                    <div className="letter">
+                    <div className="letter" key={i}>
                         <h3>{letter}</h3>
                     </div>
                 )
