@@ -43,6 +43,19 @@ function App() {
     setCurrentLetterIndex((prevIndex) => prevIndex<5 ? prevIndex+1 : prevIndex)
   }
 
+  function deleteLetter(){
+    if (currentLetterIndex>0){
+      setAnswers((prevAnswers) => {
+        let newAnswers = [...prevAnswers];
+        let newWordArray = newAnswers[currentWordIndex].wordArray;
+        newWordArray[currentLetterIndex-1] = "";
+        newAnswers[currentWordIndex] = {wordArray: newWordArray, isRegistered:false};
+        return newAnswers;
+      })
+      setCurrentLetterIndex((prevIndex) => prevIndex - 1)
+    }
+  }
+
   return (
     <div className="App">
       <div className="board">
@@ -59,6 +72,7 @@ function App() {
       <Keyboard 
         registerWord={registerWord}
         addLetter={addLetter}
+        deleteLetter={deleteLetter}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import Letter from "./Letter";
 
-export default function Keyboard({addLetter, registerWord}){ 
+export default function Keyboard({addLetter, registerWord, deleteLetter}){ 
     const firstLine = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const secondLine = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
     const thirdLine = ["Z", "X", "C", "V", "B", "N", "M"];
@@ -43,7 +43,7 @@ export default function Keyboard({addLetter, registerWord}){
                         />
                     )
                 })}
-                <div className="keyboard-letter function">
+                <div className="keyboard-letter function" onClick={deleteLetter}>
                     <h3>{"<"}</h3>
                 </div>
             </div>
