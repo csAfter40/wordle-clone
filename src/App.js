@@ -2,6 +2,7 @@ import words from "an-array-of-english-words";
 import React from "react";
 import { getRandomElement } from "./utils";
 import Word from "./components/Word";
+import Keyboard from "./components/Keyboard";
 
 function App() {
   // var words = require('an-array-of-english-words')
@@ -42,9 +43,7 @@ function App() {
           )
         })}
       </div>
-      <div className="keyboard">
-
-      </div>
+      <Keyboard />
     </div>
   );
 }
