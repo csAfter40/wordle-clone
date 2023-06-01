@@ -8,7 +8,7 @@ function App() {
   // var words = require('an-array-of-english-words')
   
   const fiveLetterWords = words.filter((word) => word.length === 5)
-  const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords));
+  const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords).toUpperCase());
   const [answers, setAnswers] = React.useState([
     {wordArray: ["", "", "", "", ""], isRegistered: false},
     {wordArray: ["", "", "", "", ""], isRegistered: false},
@@ -19,6 +19,16 @@ function App() {
   ])
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
+  
+  function isMatching(array){
+    const match = array.every((letter, i) => secretWord[i]===letter)
+    return match
+  }
+
+  function finishGame(wordIndex) {
+    console.log("game finished")
+  }
+
   function registerWord(){
     if(currentLetterIndex===5){
       setAnswers((prevAnswers)=>{
@@ -27,8 +37,9 @@ function App() {
         newAnswers[currentWordIndex] = {...prevAnswer, isRegistered:true}
         return newAnswers
       });
-      currentWordIndex < 4 && setCurrentWordIndex((prevIndex) => prevIndex + 1)
+      currentWordIndex < 5 && setCurrentWordIndex((prevIndex) => prevIndex + 1)
       setCurrentLetterIndex(0);
+      (isMatching(answers[currentWordIndex].wordArray) || currentWordIndex === 5) && finishGame(currentWordIndex) ;
     }
   }
 
@@ -65,6 +76,7 @@ function App() {
               key={i}
               answer={answer}
               isCurrentIndex={currentWordIndex === i}
+              secretWord={secretWord}
             />
           )
         })}

@@ -43,6 +43,24 @@ code {
   font-size: 1.5em;
 }
 
+.letter.correct-place {
+  background-color: #6AAA64;
+  color: white;
+  border: 2px solid #6AAA64;
+}
+
+.letter.incorrect-place {
+  background-color: #C9B458;
+  color: white;
+  border: 2px solid #C9B458;
+}
+
+.letter.not-available {
+  background-color: #787C7E;
+  color: white;
+  border: 2px solid #787C7E;
+}
+
 .keyboard {
   display: flex;
   flex-direction: column;
