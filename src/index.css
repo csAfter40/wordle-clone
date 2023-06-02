@@ -26,6 +26,30 @@ code {
   gap: 10px;
 }
 
+.board-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  position: relative;
+}
+
+#alert-message {
+  width: fit-content;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20px;
+  margin: 0 auto;
+  background-color: black;
+  color: white;
+  padding: 0 10px;
+  border-radius: 5px;
+  display: none;
+}
+
 .word-container {
   display: flex;
   flex-direction: row;

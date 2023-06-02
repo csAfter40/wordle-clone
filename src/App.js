@@ -1,11 +1,14 @@
-import words from "an-array-of-english-words";
+// import words from "an-array-of-english-words";
 import React from "react";
 import { getRandomElement } from "./utils";
 import Word from "./components/Word";
+import {words} from "popular-english-words"
 import Keyboard from "./components/Keyboard";
 
 function App() {
-  const fiveLetterWords = words.filter((word) => word.length === 5)
+  // const fiveLetterWords = words.filter((word) => word.length === 5)
+  const fiveLetterWords = words.getMostPopularLength(300, 5)
+  const allWords = words.getAll().filter((word) => word.length === 5)
   const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords).toUpperCase());
   const [answers, setAnswers] = React.useState([
     {wordArray: ["", "", "", "", ""], isRegistered: false},
@@ -41,8 +44,29 @@ function App() {
     })
   }
 
+  function convertToString(array){
+    let word = "";
+    array.forEach((letter) => word = word + letter)
+    return word
+  }
+
+  function showWordAlert(){
+    const alert = document.querySelector('#alert-message');
+    alert.style.display = "block";
+    setTimeout(()=>{
+      alert.style.display = "none";
+    }, 1000)
+  }
+
+  function isInWordList(wordArray){
+    const word = convertToString(wordArray);
+    console.log(word)
+    !allWords.includes(word.toLowerCase()) && showWordAlert()
+    return allWords.includes(word.toLowerCase())
+  }
+
   function registerWord(){
-    if(currentLetterIndex===5){
+    if(currentLetterIndex===5 && isInWordList(answers[currentWordIndex].wordArray)){
       setAnswers((prevAnswers)=>{
         let newAnswers = [...prevAnswers]
         let prevAnswer = prevAnswers[currentWordIndex]
@@ -99,7 +123,13 @@ function App() {
 
   return (
     <div className="App">
+      <div className="board-header">
+        <h1>Wordle Clone</h1>
+      </div>
       <div className="board">
+        <div id="alert-message" >
+          <p>Not in word list</p>
+        </div>
         {answers.map((answer, i)=>{
           return(
             <Word 
