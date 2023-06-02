@@ -1,7 +1,7 @@
 import React from "react";
 import Letter from "./Letter";
 
-export default function Keyboard({addLetter, registerWord, deleteLetter}){ 
+export default function Keyboard({addLetter, registerWord, deleteLetter, secretWord, selectedLetters}){ 
     const firstLine = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
     const secondLine = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
     const thirdLine = ["Z", "X", "C", "V", "B", "N", "M"];
@@ -12,9 +12,11 @@ export default function Keyboard({addLetter, registerWord, deleteLetter}){
                 {firstLine.map((letter, i) => {
                     return (
                         <Letter 
-                            key={i}
+                            key={letter}
                             letter={letter}
                             addLetter={addLetter}
+                            selectedLetters={selectedLetters}
+                            secretWord={secretWord}
                         />
                     )
                 })}
@@ -23,9 +25,11 @@ export default function Keyboard({addLetter, registerWord, deleteLetter}){
                 {secondLine.map((letter, i) => {
                     return (
                         <Letter 
-                            key={i}
+                            key={letter}
                             letter={letter}
                             addLetter={addLetter}
+                            selectedLetters={selectedLetters}
+                            secretWord={secretWord}
                         />
                     )
                 })}
@@ -37,9 +41,11 @@ export default function Keyboard({addLetter, registerWord, deleteLetter}){
                 {thirdLine.map((letter, i) => {
                     return (
                         <Letter 
-                            key={i}
+                            key={letter}
                             letter={letter}
                             addLetter={addLetter}
+                            selectedLetters={selectedLetters}
+                            secretWord={secretWord}
                         />
                     )
                 })}

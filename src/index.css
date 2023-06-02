@@ -89,6 +89,14 @@ code {
   cursor: pointer;
 }
 
+.keyboard-letter.selected {
+  background-color: #787C7E;
+}
+
+.keyboard-letter.includes {
+  background-color: #6AAA64;
+}
+
 .keyboard-letter.function {
   width: 65px;
 }

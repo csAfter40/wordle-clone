@@ -19,6 +19,8 @@ function App() {
   ])
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
+  const [selectedLetters, setSelectedLetters] = React.useState([]);
+  
   
   function isMatching(array){
     const match = array.every((letter, i) => secretWord[i]===letter)
@@ -27,6 +29,16 @@ function App() {
 
   function finishGame(wordIndex) {
     console.log("game finished")
+  }
+
+  function addLettersToSelected(wordArray){
+    setSelectedLetters((prevLetters) => {
+      let newLetters = [...prevLetters];
+      wordArray.forEach((letter) => {
+        !newLetters.includes(letter) && newLetters.push(letter)
+      })
+      return newLetters
+    })
   }
 
   function registerWord(){
@@ -40,6 +52,7 @@ function App() {
       currentWordIndex < 5 && setCurrentWordIndex((prevIndex) => prevIndex + 1)
       setCurrentLetterIndex(0);
       (isMatching(answers[currentWordIndex].wordArray) || currentWordIndex === 5) && finishGame(currentWordIndex) ;
+      addLettersToSelected(answers[currentWordIndex].wordArray)
     }
   }
 
@@ -85,6 +98,8 @@ function App() {
         registerWord={registerWord}
         addLetter={addLetter}
         deleteLetter={deleteLetter}
+        secretWord={secretWord}
+        selectedLetters={selectedLetters}
       />
     </div>
   );
