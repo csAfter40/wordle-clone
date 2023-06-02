@@ -5,8 +5,6 @@ import Word from "./components/Word";
 import Keyboard from "./components/Keyboard";
 
 function App() {
-  // var words = require('an-array-of-english-words')
-  
   const fiveLetterWords = words.filter((word) => word.length === 5)
   const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords).toUpperCase());
   const [answers, setAnswers] = React.useState([
@@ -20,7 +18,8 @@ function App() {
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
   const [selectedLetters, setSelectedLetters] = React.useState([]);
-  
+  const [gameFinished, setGameFinished] = React.useState(false);
+  const [gameWon, setGameWon] = React.useState(false);
   
   function isMatching(array){
     const match = array.every((letter, i) => secretWord[i]===letter)
@@ -28,7 +27,8 @@ function App() {
   }
 
   function finishGame(wordIndex) {
-    console.log("game finished")
+    setGameFinished(true);
+    isMatching(answers[currentWordIndex].wordArray) && setGameWon(true);
   }
 
   function addLettersToSelected(wordArray){
@@ -57,7 +57,7 @@ function App() {
   }
 
   function addLetter(letter) {
-    currentLetterIndex<5 && setAnswers((prevAnswers) => {
+    !gameFinished && currentLetterIndex<5 && setAnswers((prevAnswers) => {
       let newAnswers = [...prevAnswers];
       let newWordArray = newAnswers[currentWordIndex].wordArray;
       newWordArray[currentLetterIndex] = newWordArray[currentLetterIndex] ? newWordArray[currentLetterIndex] : letter;
@@ -68,7 +68,7 @@ function App() {
   }
 
   function deleteLetter(){
-    if (currentLetterIndex>0){
+    if (currentLetterIndex>0 && !gameFinished){
       setAnswers((prevAnswers) => {
         let newAnswers = [...prevAnswers];
         let newWordArray = newAnswers[currentWordIndex].wordArray;
@@ -78,6 +78,23 @@ function App() {
       })
       setCurrentLetterIndex((prevIndex) => prevIndex - 1)
     }
+  }
+
+  function restartGame(){
+    setSecretWord(getRandomElement(fiveLetterWords).toUpperCase());
+    setAnswers([
+      {wordArray: ["", "", "", "", ""], isRegistered: false},
+      {wordArray: ["", "", "", "", ""], isRegistered: false},
+      {wordArray: ["", "", "", "", ""], isRegistered: false},
+      {wordArray: ["", "", "", "", ""], isRegistered: false},
+      {wordArray: ["", "", "", "", ""], isRegistered: false},
+      {wordArray: ["", "", "", "", ""], isRegistered: false},
+    ]);
+    setCurrentWordIndex(0);
+    setCurrentLetterIndex(0);
+    setGameFinished(false);
+    setSelectedLetters([]);
+    setGameWon(false);
   }
 
   return (
@@ -101,6 +118,12 @@ function App() {
         secretWord={secretWord}
         selectedLetters={selectedLetters}
       />
+      <div className="game-over-text" style={{display: gameFinished && !gameWon ? "flex" : "none"}}>
+        <p>{`Word was "${secretWord}"`}</p>
+      </div>
+      <div onClick={restartGame} className="restart-button" style={{display: gameFinished ? "flex" : "none"}}>
+        <h3>Restart Game</h3>
+      </div>
     </div>
   );
 }

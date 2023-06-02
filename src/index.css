@@ -100,3 +100,20 @@ code {
 .keyboard-letter.function {
   width: 65px;
 }
+
+.restart-button {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #787C7E;
+  border: none;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.game-over-text {
+  margin-bottom: 0px;
+}
