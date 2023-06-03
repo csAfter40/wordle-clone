@@ -3,18 +3,20 @@ import { getRandomElement } from "./utils";
 import Word from "./components/Word";
 import {words} from "popular-english-words"
 import Keyboard from "./components/Keyboard";
+import Settings from "./components/Settings";
 
 function App() {
-  const letterCount = 6;
-  const fiveLetterWords = words.getMostPopularLength(300, letterCount)
+  const letterCount = 4;
+  const wordsPool = words.getMostPopularLength(300, letterCount)
   const allWords = words.getAll().filter((word) => word.length === letterCount)
-  const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords).toUpperCase());
+  const [secretWord, setSecretWord] = React.useState(getRandomElement(wordsPool).toUpperCase());
   const [answers, setAnswers] = React.useState(getNewAnswers())
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
   const [selectedLetters, setSelectedLetters] = React.useState([]);
   const [gameFinished, setGameFinished] = React.useState(false);
   const [gameWon, setGameWon] = React.useState(false);
+  const [hasGameStarted, setHasGameStarted] = React.useState(false);
 
   function getNewAnswers(){
     let answersArray = [];
@@ -106,7 +108,7 @@ function App() {
   }
 
   function restartGame(){
-    setSecretWord(getRandomElement(fiveLetterWords).toUpperCase());
+    setSecretWord(getRandomElement(wordsPool).toUpperCase());
     setAnswers(getNewAnswers());
     setCurrentWordIndex(0);
     setCurrentLetterIndex(0);
@@ -116,6 +118,7 @@ function App() {
   }
 
   return (
+    hasGameStarted ? 
     <div className="App">
       <div className="board-header">
         <h1>Wordle Clone</h1>
@@ -148,7 +151,8 @@ function App() {
       <div onClick={restartGame} className="restart-button" style={{display: gameFinished ? "flex" : "none"}}>
         <h3>Restart Game</h3>
       </div>
-    </div>
+    </div> :
+    <Settings />
   );
 }
 
