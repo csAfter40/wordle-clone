@@ -1,4 +1,3 @@
-// import words from "an-array-of-english-words";
 import React from "react";
 import { getRandomElement } from "./utils";
 import Word from "./components/Word";
@@ -6,7 +5,6 @@ import {words} from "popular-english-words"
 import Keyboard from "./components/Keyboard";
 
 function App() {
-  // const fiveLetterWords = words.filter((word) => word.length === 5)
   const fiveLetterWords = words.getMostPopularLength(300, 5)
   const allWords = words.getAll().filter((word) => word.length === 5)
   const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords).toUpperCase());
@@ -23,7 +21,7 @@ function App() {
   const [selectedLetters, setSelectedLetters] = React.useState([]);
   const [gameFinished, setGameFinished] = React.useState(false);
   const [gameWon, setGameWon] = React.useState(false);
-  
+
   function isMatching(array){
     const match = array.every((letter, i) => secretWord[i]===letter)
     return match
@@ -60,7 +58,6 @@ function App() {
 
   function isInWordList(wordArray){
     const word = convertToString(wordArray);
-    console.log(word)
     !allWords.includes(word.toLowerCase()) && showWordAlert()
     return allWords.includes(word.toLowerCase())
   }
