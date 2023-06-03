@@ -5,22 +5,26 @@ import {words} from "popular-english-words"
 import Keyboard from "./components/Keyboard";
 
 function App() {
-  const fiveLetterWords = words.getMostPopularLength(300, 5)
-  const allWords = words.getAll().filter((word) => word.length === 5)
+  const letterCount = 6;
+  const fiveLetterWords = words.getMostPopularLength(300, letterCount)
+  const allWords = words.getAll().filter((word) => word.length === letterCount)
   const [secretWord, setSecretWord] = React.useState(getRandomElement(fiveLetterWords).toUpperCase());
-  const [answers, setAnswers] = React.useState([
-    {wordArray: ["", "", "", "", ""], isRegistered: false},
-    {wordArray: ["", "", "", "", ""], isRegistered: false},
-    {wordArray: ["", "", "", "", ""], isRegistered: false},
-    {wordArray: ["", "", "", "", ""], isRegistered: false},
-    {wordArray: ["", "", "", "", ""], isRegistered: false},
-    {wordArray: ["", "", "", "", ""], isRegistered: false},
-  ])
+  const [answers, setAnswers] = React.useState(getNewAnswers())
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
   const [selectedLetters, setSelectedLetters] = React.useState([]);
   const [gameFinished, setGameFinished] = React.useState(false);
   const [gameWon, setGameWon] = React.useState(false);
+
+  function getNewAnswers(){
+    let answersArray = [];
+    for (let i = 0; i<6; i++){
+      answersArray.push(
+        {wordArray: new Array(letterCount).fill(""), isRegistered: false}
+      )
+    };
+    return answersArray;
+  }
 
   function isMatching(array){
     const match = array.every((letter, i) => secretWord[i]===letter)
@@ -63,7 +67,7 @@ function App() {
   }
 
   function registerWord(){
-    if(currentLetterIndex===5 && isInWordList(answers[currentWordIndex].wordArray)){
+    if(currentLetterIndex===letterCount && isInWordList(answers[currentWordIndex].wordArray)){
       setAnswers((prevAnswers)=>{
         let newAnswers = [...prevAnswers]
         let prevAnswer = prevAnswers[currentWordIndex]
@@ -78,14 +82,14 @@ function App() {
   }
 
   function addLetter(letter) {
-    !gameFinished && currentLetterIndex<5 && setAnswers((prevAnswers) => {
+    !gameFinished && currentLetterIndex < letterCount && setAnswers((prevAnswers) => {
       let newAnswers = [...prevAnswers];
       let newWordArray = newAnswers[currentWordIndex].wordArray;
       newWordArray[currentLetterIndex] = newWordArray[currentLetterIndex] ? newWordArray[currentLetterIndex] : letter;
       newAnswers[currentWordIndex] = {wordArray: newWordArray, isRegistered:false};
       return newAnswers
     })
-    setCurrentLetterIndex((prevIndex) => prevIndex<5 ? prevIndex+1 : prevIndex)
+    setCurrentLetterIndex((prevIndex) => prevIndex < letterCount ? prevIndex + 1 : prevIndex)
   }
 
   function deleteLetter(){
@@ -103,14 +107,7 @@ function App() {
 
   function restartGame(){
     setSecretWord(getRandomElement(fiveLetterWords).toUpperCase());
-    setAnswers([
-      {wordArray: ["", "", "", "", ""], isRegistered: false},
-      {wordArray: ["", "", "", "", ""], isRegistered: false},
-      {wordArray: ["", "", "", "", ""], isRegistered: false},
-      {wordArray: ["", "", "", "", ""], isRegistered: false},
-      {wordArray: ["", "", "", "", ""], isRegistered: false},
-      {wordArray: ["", "", "", "", ""], isRegistered: false},
-    ]);
+    setAnswers(getNewAnswers());
     setCurrentWordIndex(0);
     setCurrentLetterIndex(0);
     setGameFinished(false);
