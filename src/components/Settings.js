@@ -1,12 +1,12 @@
 import React from "react";
-import Letter from "./Letter";
 
 export default function Settings({setHasGameStarted, setLanguage, setLetterCount}){
     function handleStartGame(){
         setHasGameStarted(true);
         const letterCount = parseInt(document.querySelector("#letter-count-input").value);
-        console.log(letterCount)
+        const language = document.querySelector("#language-input").value;
         setLetterCount(letterCount);
+        setLanguage(language);
     }
 
     return(
@@ -56,8 +56,8 @@ export default function Settings({setHasGameStarted, setLanguage, setLetterCount
                 <div className="input-container">
                     <h3 className="input-label">Language:</h3>
                     <select name="language" id="language-input">
-                        <option value="english">English</option>
-                        <option value="turkish">Turkish</option>
+                        <option value="EN">English</option>
+                        <option value="TR">Turkish</option>
                     </select>
                 </div>
             </div>

@@ -1,15 +1,33 @@
 import React from "react";
 import Letter from "./Letter";
 
-export default function Keyboard({addLetter, registerWord, deleteLetter, secretWord, selectedLetters}){ 
-    const firstLine = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
-    const secondLine = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
-    const thirdLine = ["Z", "X", "C", "V", "B", "N", "M"];
+export default function Keyboard({language, addLetter, registerWord, deleteLetter, secretWord, selectedLetters}){ 
+    const englishKeyboard = [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+        ["Z", "X", "C", "V", "B", "N", "M"]
+    ]
+    const turkishKeyboard = [
+        ["E", "R", "T", "Y", "U", "I", "O", "P", "Ğ", "Ü"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L", "Ş", "İ"],
+        ["Z", "C", "V", "B", "N", "M", "Ö", "Ç"]
+    ]
 
+    let currentKeyboard;
+    switch (language) {
+        case "EN":
+            currentKeyboard = englishKeyboard;
+            break;
+        case "TR":
+            currentKeyboard = turkishKeyboard;
+            break;
+        default:
+            currentKeyboard = englishKeyboard;
+    }
     return (
         <div className="keyboard">
             <div className="keyboard-line">
-                {firstLine.map((letter, i) => {
+                {currentKeyboard[0].map((letter) => {
                     return (
                         <Letter 
                             key={letter}
@@ -22,7 +40,7 @@ export default function Keyboard({addLetter, registerWord, deleteLetter, secretW
                 })}
             </div>
             <div className="keyboard-line">
-                {secondLine.map((letter, i) => {
+                {currentKeyboard[1].map((letter) => {
                     return (
                         <Letter 
                             key={letter}
@@ -38,7 +56,7 @@ export default function Keyboard({addLetter, registerWord, deleteLetter, secretW
                 <div className="keyboard-letter function" onClick={registerWord}>
                     <h3>Enter</h3>
                 </div>
-                {thirdLine.map((letter, i) => {
+                {currentKeyboard[2].map((letter) => {
                     return (
                         <Letter 
                             key={letter}

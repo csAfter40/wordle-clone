@@ -18,23 +18,23 @@ function App() {
   const [gameFinished, setGameFinished] = React.useState(false);
   const [gameWon, setGameWon] = React.useState(false);
   const [hasGameStarted, setHasGameStarted] = React.useState(false);
-  const [language, setLanguage] = React.useState("english");
-  
+  const [language, setLanguage] = React.useState("TR");
+
   React.useEffect(()=>{
     setAnswers(getNewAnswers())
   },[letterCount])
 
   React.useEffect(()=>{
-    setSecretWord(getRandomElement(wordsPool).toUpperCase());
+    setSecretWord(getRandomElement(wordsPool).toLocaleUpperCase(language));
   },[wordsPool])
 
   React.useEffect(()=>{
     switch(language) {
-      case "english":
+      case "EN":
         setWordsPool(words.getMostPopularLength(300, letterCount));
         setAllWords(words.getAll().filter((word) => word.length === letterCount));
         break;
-      case "turkish":
+      case "TR":
         setWordsPool(turkishWords.filter((word) => word.length === letterCount));
         setAllWords(turkishWords.filter((word) => word.length === letterCount));
         break;
@@ -88,8 +88,8 @@ function App() {
 
   function isInWordList(wordArray){
     const word = convertToString(wordArray);
-    !allWords.includes(word.toLowerCase()) && showWordAlert()
-    return allWords.includes(word.toLowerCase())
+    !allWords.includes(word.toLocaleLowerCase(language)) && showWordAlert()
+    return allWords.includes(word.toLocaleLowerCase(language))
   }
 
   function registerWord(){
@@ -132,7 +132,7 @@ function App() {
   }
 
   function restartGame(){
-    setSecretWord(getRandomElement(wordsPool).toUpperCase());
+    setSecretWord(getRandomElement(wordsPool).toLocaleUpperCase(language));
     setAnswers(getNewAnswers());
     setCurrentWordIndex(0);
     setCurrentLetterIndex(0);
@@ -168,6 +168,7 @@ function App() {
         deleteLetter={deleteLetter}
         secretWord={secretWord}
         selectedLetters={selectedLetters}
+        language={language}
       />
       <div className="game-over-text" style={{display: gameFinished && !gameWon ? "flex" : "none"}}>
         <p>{`Word was "${secretWord}"`}</p>
