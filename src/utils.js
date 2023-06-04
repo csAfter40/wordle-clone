@@ -1,5 +1,9 @@
 function getRandomElement(iterable) {
-    return iterable[Math.floor(Math.random()*iterable.length)];
+    const result = iterable.length ? 
+        iterable[Math.floor(Math.random()*iterable.length)] :
+        ""
+    return result 
+
 }
 
 export {getRandomElement}

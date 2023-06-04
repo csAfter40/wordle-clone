@@ -4,12 +4,13 @@ import Word from "./components/Word";
 import {words} from "popular-english-words"
 import Keyboard from "./components/Keyboard";
 import Settings from "./components/Settings";
+import turkishWords from "./turkishWords";
 
 function App() {
-  const letterCount = 4;
-  const wordsPool = words.getMostPopularLength(300, letterCount)
-  const allWords = words.getAll().filter((word) => word.length === letterCount)
-  const [secretWord, setSecretWord] = React.useState(getRandomElement(wordsPool).toUpperCase());
+  const [letterCount, setLetterCount] = React.useState(6);
+  const [wordsPool, setWordsPool] = React.useState([]);
+  const [allWords, setAllWords] = React.useState([]);
+  const [secretWord, setSecretWord] = React.useState("");
   const [answers, setAnswers] = React.useState(getNewAnswers())
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
   const [currentLetterIndex, setCurrentLetterIndex] = React.useState(0);
@@ -17,6 +18,29 @@ function App() {
   const [gameFinished, setGameFinished] = React.useState(false);
   const [gameWon, setGameWon] = React.useState(false);
   const [hasGameStarted, setHasGameStarted] = React.useState(false);
+  const [language, setLanguage] = React.useState("english");
+  
+  React.useEffect(()=>{
+    setAnswers(getNewAnswers())
+  },[letterCount])
+
+  React.useEffect(()=>{
+    setSecretWord(getRandomElement(wordsPool).toUpperCase());
+  },[wordsPool])
+
+  React.useEffect(()=>{
+    switch(language) {
+      case "english":
+        setWordsPool(words.getMostPopularLength(300, letterCount));
+        setAllWords(words.getAll().filter((word) => word.length === letterCount));
+        break;
+      case "turkish":
+        setWordsPool(turkishWords.filter((word) => word.length === letterCount));
+        setAllWords(turkishWords.filter((word) => word.length === letterCount));
+        break;
+    }
+  },[language, letterCount])
+
 
   function getNewAnswers(){
     let answersArray = [];
@@ -152,7 +176,11 @@ function App() {
         <h3>Restart Game</h3>
       </div>
     </div> :
-    <Settings />
+    <Settings 
+        setHasGameStarted={setHasGameStarted}
+        setLetterCount={setLetterCount}
+        setLanguage={setLanguage}
+    />
   );
 }
 

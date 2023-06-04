@@ -1,7 +1,14 @@
 import React from "react";
 import Letter from "./Letter";
 
-export default function Settings(){
+export default function Settings({setHasGameStarted, setLanguage, setLetterCount}){
+    function handleStartGame(){
+        setHasGameStarted(true);
+        const letterCount = parseInt(document.querySelector("#letter-count-input").value);
+        console.log(letterCount)
+        setLetterCount(letterCount);
+    }
+
     return(
         <div className="settings-container">
             <div className="word-container">
@@ -54,7 +61,7 @@ export default function Settings(){
                     </select>
                 </div>
             </div>
-            <div className="start-button">
+            <div onClick={handleStartGame} className="start-button">
                 <h2>Start Game</h2>
             </div>
         </div>
