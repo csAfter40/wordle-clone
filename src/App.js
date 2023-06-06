@@ -57,7 +57,7 @@ function App() {
     return match
   }
 
-  function finishGame(wordIndex) {
+  function finishGame() {
     setGameFinished(true);
     isMatching(answers[currentWordIndex].wordArray) && setGameWon(true);
   }
@@ -141,6 +141,11 @@ function App() {
     setGameWon(false);
   }
 
+  function goToSettings(){
+    restartGame();
+    setHasGameStarted(false);
+  }
+
   return (
     hasGameStarted ? 
     <div className="App">
@@ -173,8 +178,13 @@ function App() {
       <div className="game-over-text" style={{display: gameFinished && !gameWon ? "flex" : "none"}}>
         <p>{`Word was "${secretWord}"`}</p>
       </div>
-      <div onClick={restartGame} className="restart-button" style={{display: gameFinished ? "flex" : "none"}}>
-        <h3>Restart Game</h3>
+      <div className="button-container">
+        <div onClick={restartGame} className="restart-button" style={{display: gameFinished ? "flex" : "none"}}>
+          <h3>Restart Game</h3>
+        </div>
+        <div onClick={goToSettings} className="settings-button" style={{display: gameFinished ? "flex" : "none"}}>
+          <h3>Settings</h3>
+        </div>
       </div>
     </div> :
     <Settings 

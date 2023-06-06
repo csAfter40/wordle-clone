@@ -41,22 +41,15 @@ export default function Settings({setHasGameStarted, setLanguage, setLetterCount
                     <h3 className="input-label">Letter Count:</h3>
                     <select name="letter-count" id="letter-count-input">
                         <option value="4">4</option>
-                        <option value="5">5</option>
+                        <option selected="selected" value="5">5</option>
                         <option value="6">6</option>
-                    </select>
-                </div>
-                <div className="input-container">
-                    <h3 className="input-label">Difficulty:</h3>
-                    <select name="difficulty" id="difficulty-input">
-                        <option value="easy">Easy</option>
-                        <option value="normal">Normal</option>
-                        <option value="hard">Hard</option>
+                        <option value="7">7</option>
                     </select>
                 </div>
                 <div className="input-container">
                     <h3 className="input-label">Language:</h3>
                     <select name="language" id="language-input">
-                        <option value="EN">English</option>
+                        <option selected="selected" value="EN">English</option>
                         <option value="TR">Turkish</option>
                     </select>
                 </div>
