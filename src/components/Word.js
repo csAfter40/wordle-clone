@@ -1,6 +1,6 @@
 import React  from "react";
 
-export default function Word({answer, isCurrentIndex, secretWord}) {
+export default function Word({answer, secretWord}) {
     
     // letter color logic
     let secretWordArray = [...secretWord];

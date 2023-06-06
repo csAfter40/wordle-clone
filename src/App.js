@@ -161,7 +161,6 @@ function App() {
             <Word 
               key={i}
               answer={answer}
-              isCurrentIndex={currentWordIndex === i}
               secretWord={secretWord}
             />
           )
