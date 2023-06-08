@@ -128,7 +128,8 @@ code {
 
 @media screen and (max-width: 500px) {
   .keyboard-letter {
-    width: 35px;
+    width: 33px;
+    height: 55px;
   }
   .keyboard-letter.function {
     width: 55px;
@@ -136,6 +137,12 @@ code {
   .letter {
     width: 45px;
     height: 45px;
+  }
+  .keyboard {
+    gap: 3px;
+  }
+  .keyboard-line {
+    gap: 3px;
   }
 }
 
