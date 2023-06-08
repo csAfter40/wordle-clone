@@ -5,7 +5,7 @@ export default function Letter({letter, addLetter, secretWord, selectedLetters})
         (secretWord.includes(letter) ? "includes" : "selected") : ""
 
     return (
-        <div className={`keyboard-letter ${letterClass}`} onClick={()=>addLetter(letter)}>
+        <div className={`keyboard-letter ${letterClass} noselect`} onClick={()=>addLetter(letter)}>
             <h3>{letter}</h3>
         </div>
     )
