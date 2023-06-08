@@ -53,7 +53,7 @@ export default function Keyboard({language, addLetter, registerWord, deleteLette
                 })}
             </div>
             <div className="keyboard-line">
-                <div className="keyboard-letter function" onClick={registerWord}>
+                <div className="keyboard-letter function noselect" onClick={registerWord}>
                     <h3>Enter</h3>
                 </div>
                 {currentKeyboard[2].map((letter) => {
@@ -67,7 +67,7 @@ export default function Keyboard({language, addLetter, registerWord, deleteLette
                         />
                     )
                 })}
-                <div className="keyboard-letter function" onClick={deleteLetter}>
+                <div className="keyboard-letter function noselect" onClick={deleteLetter}>
                     <h3>{"<"}</h3>
                 </div>
             </div>
