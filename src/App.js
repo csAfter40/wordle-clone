@@ -21,24 +21,28 @@ function App() {
   const [language, setLanguage] = React.useState("TR");
 
   React.useEffect(()=>{
-    setAnswers(getNewAnswers())
+    setAnswers(getNewAnswers());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[letterCount])
 
   React.useEffect(()=>{
     setSecretWord(getRandomElement(wordsPool).toLocaleUpperCase(language));
-  },[wordsPool])
+  },[wordsPool, language])
 
   React.useEffect(()=>{
     switch(language) {
-      case "EN":
-        setWordsPool(words.getMostPopularLength(300, letterCount));
-        setAllWords(words.getAll().filter((word) => word.length === letterCount));
-        break;
       case "TR":
         setWordsPool(turkishWords.filter((word) => word.length === letterCount));
         setAllWords(turkishWords.filter((word) => word.length === letterCount));
         break;
-    }
+      case "EN":
+        setWordsPool(words.getMostPopularLength(300, letterCount));
+        setAllWords(words.getAll().filter((word) => word.length === letterCount));
+        break;
+      default:
+        setWordsPool(words.getMostPopularLength(300, letterCount));
+        setAllWords(words.getAll().filter((word) => word.length === letterCount));
+      }
   },[language, letterCount])
 
 
